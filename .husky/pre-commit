@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "Formatting files..."
+npm run format
+
+echo "Linting files..."
+npm run lint
+
+echo "Building TypeScript project..."
+npm run build
+
+echo "Build Successful, Commit Granted"
+
