@@ -1,0 +1,8 @@
+bucket_name = "image-resizer-bucket-prd"
+bucket_policy_name = "image-resizer-bucket-policy-prd"
+acr_name    = "image-resizer-registry-prd"
+user_name   = "image-resizer-user-prd"
+task_definition_name = "image-resizer-task-prd"
+cluster_name = "image-resizer-cluster-prd"
+ecs_role_name = "image-resizer-ecs-role-prd"
+aws_region  = "us-east-1"
