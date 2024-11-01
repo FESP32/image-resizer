@@ -4,7 +4,7 @@
 
 For a live preview of the application, visit the demo by following this link:
 
-[View Demo Application](http://44.223.78.165:3000/)
+[View Demo Application](http://3.236.218.18:3000/)
 
 # Terraform Infrastructure Setup Guide
 
