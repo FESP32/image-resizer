@@ -48,12 +48,25 @@ const Resizer: React.FC = () => {
     return () => {
       if (preview) {
         URL.revokeObjectURL(preview);
+        console.log('Cleanup: Releasing preview URL');
       }
     };
   }, [preview]);
 
-  const uploadImage = async () => {
+  const uploadImage = useCallback(async () => {
     if (!selectedFile) {
+      return;
+    }
+
+    if (height === 0 || width === 0) {
+      toast.error('Height and width must be greater than 0', {
+        position: 'bottom-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        progress: undefined,
+        theme: 'dark',
+      });
       return;
     }
 
@@ -90,7 +103,7 @@ const Resizer: React.FC = () => {
         theme: 'dark',
       });
     } catch (error) {
-      toast.error('Error uploading image', {
+      toast.error('Error resizing image', {
         position: 'bottom-center',
         autoClose: 3000,
         hideProgressBar: true,
@@ -98,13 +111,13 @@ const Resizer: React.FC = () => {
         progress: undefined,
         theme: 'dark',
       });
-      console.error('Error uploading image:', error);
+      console.error('Error resizing image:', error);
     } finally {
       setLoading(false);
       setPreview(null);
       setSelectedFile(null);
     }
-  };
+  }, [selectedFile, width, height, setImages]);
 
   return (
     <div className="flex justify-center">
@@ -136,50 +149,50 @@ const Resizer: React.FC = () => {
       )}
 
       {preview && (
-        <div className="mt-4 flex flex-col justify-center space-y-4 rounded-lg bg-gray-200 p-4 text-gray-500">
+        <div className="mx-auto mt-4 flex w-full flex-col justify-center space-y-4 rounded-lg bg-gray-200 p-4 text-gray-500 md:max-w-md lg:max-w-lg">
           {!loading ? (
             <img
               src={preview}
               alt="Preview"
-              className="max-h-96 max-w-full rounded-lg object-cover"
+              className="max-h-64 w-full rounded-lg object-cover sm:max-h-80 md:max-h-96"
             />
           ) : (
-            <div className="p-32">
+            <div className="p-16 sm:p-24 md:p-32">
               <Loader />
             </div>
           )}
 
-          <div className="mt-2 flex space-x-4">
-            <div className="flex flex-col">
-              <label>Height</label>
+          <div className="mt-2 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+            <div className="flex w-full flex-col sm:w-1/2">
+              <label className="text-sm sm:text-base">Height</label>
               <input
                 type="number"
                 min={0}
                 value={height}
                 onChange={(e) => setHeight(Number(e.target.value))}
-                className="rounded border p-1"
+                className="rounded border p-1 text-sm sm:text-base"
               />
             </div>
-            <div className="flex flex-col">
-              <label>Width</label>
+            <div className="flex w-full flex-col sm:w-1/2">
+              <label className="text-sm sm:text-base">Width</label>
               <input
                 type="number"
                 value={width}
                 onChange={(e) => setWidth(Number(e.target.value))}
-                className="rounded border p-1"
+                className="rounded border p-1 text-sm sm:text-base"
               />
             </div>
-
-            <span className="flex flex-col-reverse py-1">px</span>
+            <span className="flex items-center justify-center py-1 text-sm sm:text-base">px</span>
           </div>
-          <div className="flex">
+
+          <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
             <button
-              className="flex w-1/2 items-center justify-center text-lg font-semibold text-black"
-              onClick={(e) => {
+              className="flex w-full items-center justify-center rounded-full bg-gray-300 p-2 text-lg font-semibold text-black sm:w-1/2"
+              onClick={() => {
                 setPreview(null);
               }}
             >
-              <RxReset className="mr-2 h-6 w-6 text-black" /> Reset
+              <RxReset className="mr-2 h-5 w-5 text-black" /> Reset
             </button>
             <GradientButton onClick={uploadImage}>Resize Image</GradientButton>
           </div>

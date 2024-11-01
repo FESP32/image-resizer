@@ -152,45 +152,45 @@ Once Terraform has been applied and an IAM user with access keys has been create
 
    ```
 
-## Design choices and Lnown limitations
+## Design Choices and Known Limitations
+
+### Next.js for the Image Resizer Application
 
 Next.js was chosen for this project due to its powerful features that make it ideal for building a robust image resizer application using React and API routes. Below are the key reasons for selecting Next.js:
 
-### 1. **Full-Stack Capabilities**
+#### 1. **Full-Stack Capabilities**
 
 Next.js supports both frontend and backend logic within a single codebase through its API routes. This means that the image processing logic using the AWS SDK can be seamlessly handled on the server side, while the React-based user interface provides an intuitive experience on the client side. This eliminates the need for separate backend services, simplifying project management and deployment.
 
-### 3. **API Routes Integration**
+#### 2. **API Routes Integration**
 
 The built-in API routes feature in Next.js allows you to create backend endpoints effortlessly. This is perfect for creating and managing image processing operations through the AWS SDK, providing a streamlined way to handle server-side image manipulation and S3 interactions without setting up an entirely separate server.
 
-### 4. **Single Codebase for Frontend and Backend**
+#### 3. **Single Codebase for Frontend and Backend**
 
 By using Next.js, the development team can maintain a single codebase that includes both frontend components and backend logic. This unified approach improves collaboration, simplifies code management, and accelerates development speed. It also ensures consistency across the application, as both frontend and backend logic are built using TypeScript.
 
-### 6. **Ease of Deployment**
+#### 4. **Ease of Deployment**
 
-Next.js can be deployed easily using platforms any cloud service that supports Node.js, making it straightforward to deploy the application and integrate with AWS for further scalability.
+Next.js can be deployed easily using any cloud service that supports Node.js, making it straightforward to deploy the application and integrate with AWS for further scalability.
 
-### Conclusion
+### Amazon ECS as the Computing Solution
 
-Next.js was selected for this image resizer project to leverage its combination of React-based development, integrated API routes, and seamless AWS SDK integration, all within a single, maintainable codebase. This choice ensures rapid development, performance, and scalability without sacrificing code quality or maintainability.
+ECS was chosen as the computing solution to complement the Next.js application for the following reasons:
 
-## Final Considerations and Next Steps
+#### 1. **Scalability and Load Management**
 
-While this guide has covered the essential steps to set up a Terraform-managed infrastructure, create workspaces, and set up a development environment with Docker Compose, there are a few important areas that can be further developed
+ECS provides an efficient way to manage and scale containerized applications, which is crucial for handling potentially high volumes of image processing requests.
 
-### 1. CI/CD Pipeline with GitHub Actions
+#### 2. **Seamless Integration with AWS Ecosystem**
 
-Implementing a CI/CD pipeline ensures that your application is automatically tested and deployed as changes are made. You can set up a GitHub Actions workflow to build, test, and deploy your project seamlessly.
+ECS integrates natively with AWS services like S3, IAM, and CloudWatch. This simplifies the setup for managing image uploads, processing, and monitoring, aligning with the use of the AWS SDK within the Next.js API routes.
 
-**Steps to Create a GitHub Actions CI/CD Pipeline**:
+#### 3. **Containerization Benefits**
 
-- **Create a `.github/workflows` directory**.
-- **Define the workflow**:
-  - **Trigger** on `push` or `pull_request` events.
-  - **Jobs** to build, test, and deploy the application.
+Deploying the Next.js application as a container on ECS provides the consistency and isolation benefits of containerization. This ensures that the application runs uniformly across different environments, reducing potential issues related to development-to-production discrepancies.
 
-### 2. Unit Testing
+### Final Considerations and Next Steps
 
-Adding unit tests to ensure that the code is reliable and meets the expected behavior.
+- **CI/CD Pipeline with GitHub Actions**: Implementing a CI/CD pipeline ensures automatic testing and deployment. This can be set up with GitHub Actions to build, test, and deploy the Next.js application seamlessly.
+- **Unit Testing**: Incorporate a robust unit testing strategy using frameworks like Jest to ensure code reliability and maintain a high standard of quality.
